@@ -49,7 +49,7 @@ public class Message {
         this.addMeta("success",Boolean.FALSE);
         this.addMeta("code",statusCode);
         this.addMeta("msg",statusMsg);
-        this.addMeta("timestamp",new Timestamp(new Date().getTime()));
+        this.addMeta("timestamp",new Timestamp(System.currentTimeMillis()));
         return this;
     }
 
