@@ -9,6 +9,12 @@
         where uid=#{uid}
     </select>
 
+    <select id="check" resultType="com.neu.jianshufront.entity.UserAction">
+        select * from
+            jianshu.user_action
+        where uid=#{uid} and pid=#{pid} and action='collect'
+    </select>
+
     <insert id="add" parameterType="com.neu.jianshufront.entity.UserAction" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
         insert into jianshu.user_action
         (uid, action, time, pid)

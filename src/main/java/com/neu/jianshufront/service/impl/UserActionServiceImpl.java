@@ -22,7 +22,21 @@ public class UserActionServiceImpl implements UserActionService {
         ||StringUtils.isEmpty(userAction.getPid())){
             return -1;
         }
-        return userActionDao.add(userAction);
+        if(userAction.getAction().equals("collect")){
+            UserAction userAction1=userActionDao.check(userAction);
+            if(userAction==null){
+                return userActionDao.add(userAction);
+            }else{
+                return userActionDao.delete(userAction1.getId());
+            }
+        }else{
+            UserAction userAction1=userActionDao.check(userAction);
+            if(userAction==null){
+                return userActionDao.add(userAction);
+            }else {
+                return 0;
+            }
+        }
     }
 
     @Override
