@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mydb
+ Source Server         : 10.25.44.204
  Source Server Type    : MySQL
- Source Server Version : 50726
- Source Host           : localhost:3306
+ Source Server Version : 50639
+ Source Host           : 10.25.44.204:3306
  Source Schema         : jianshu
 
  Target Server Type    : MySQL
- Target Server Version : 50726
+ Target Server Version : 50639
  File Encoding         : 65001
 
- Date: 26/06/2019 20:20:00
+ Date: 27/06/2019 10:08:59
 */
 
 SET NAMES utf8mb4;
@@ -32,18 +32,21 @@ CREATE TABLE `alembic_version` (
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `dynamic` varchar(50) DEFAULT NULL,
-  `article_id` varchar(50) DEFAULT NULL,
+  `uid` varchar(50) DEFAULT NULL,
   `pid` varchar(50) DEFAULT NULL,
   `author` varchar(50) DEFAULT NULL,
-  `time` varchar(50) DEFAULT NULL,
+  `last_update_time` varchar(50) DEFAULT NULL,
   `font_num` varchar(50) DEFAULT NULL,
   `read_num` varchar(50) DEFAULT NULL,
   `like_num` varchar(50) DEFAULT NULL,
   `comment_num` varchar(50) DEFAULT NULL,
   `title` varchar(50) DEFAULT NULL,
   `url` varchar(50) DEFAULT NULL,
-  `content` varchar(50) DEFAULT NULL,
+  `content` text,
+  `key_words` varchar(50) DEFAULT NULL,
+  `vector` text,
+  `frequence` text,
+  `other_text` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -56,7 +59,6 @@ CREATE TABLE `attend` (
   `user` varchar(50) DEFAULT NULL,
   `attend_id` varchar(50) DEFAULT NULL,
   `time` varchar(50) DEFAULT NULL,
-  `dynamic` varchar(50) DEFAULT NULL,
   `attend` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -70,7 +72,6 @@ CREATE TABLE `comment` (
   `user` varchar(50) DEFAULT NULL,
   `comment_id` varchar(50) DEFAULT NULL,
   `time` varchar(50) DEFAULT NULL,
-  `dynamic` varchar(50) DEFAULT NULL,
   `title` varchar(50) DEFAULT NULL,
   `comment` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -84,7 +85,6 @@ CREATE TABLE `join` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user` varchar(50) DEFAULT NULL,
   `time` varchar(50) DEFAULT NULL,
-  `dynamic` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -97,20 +97,7 @@ CREATE TABLE `like` (
   `user` varchar(50) DEFAULT NULL,
   `like_id` varchar(50) DEFAULT NULL,
   `time` varchar(50) DEFAULT NULL,
-  `dynamic` varchar(50) DEFAULT NULL,
   `author` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for relation
--- ----------------------------
-DROP TABLE IF EXISTS `relation`;
-CREATE TABLE `relation` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `usera` varchar(50) DEFAULT NULL,
-  `userb` varchar(50) DEFAULT NULL,
-  `rel` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -120,7 +107,6 @@ CREATE TABLE `relation` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `dynamic` varchar(50) DEFAULT NULL,
   `gender` varchar(50) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
   `concern` varchar(50) DEFAULT NULL,
@@ -132,3 +118,11 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+create table user_action(
+                            id int primary key auto_increment,
+                            uid varchar(50),
+                            action varchar(30),
+                            time varchar(50),
+                            pid varchar(50)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

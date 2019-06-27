@@ -4,6 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neu.jianshufront.dao.KeyWordDao">
     <select id="getLinkByKeyWord" resultType="com.neu.jianshufront.entity.KeyWord">
-        select * from article where find_in_set(#{keyWord},key_word);
+        select * from jianshu.article where find_in_set(#{keyWord},key_words);
     </select>
+
+    <insert id="add" parameterType="com.neu.jianshufront.entity.KeyWord" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        insert into jianshu.article
+        (uid, pid, author, last_update_time, font_num, read_num, like_num, comment_num, title,
+         url, content, key_words, vector, frequence, other_text)
+        values
+        (#{uid},#{pid},#{author},#{lastUpdateTime},#{fontNum},#{readNum},#{likeNum},#{commentNum}
+        ,#{title},#{url},#{content},#{keyWords},#{vector},#{frequence},#{otherText})
+    </insert>
 </mapper>
