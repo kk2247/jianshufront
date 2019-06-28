@@ -1,5 +1,6 @@
 package com.neu.jianshufront.service.impl;
 
+import com.neu.jianshufront.dao.MyUserDao;
 import com.neu.jianshufront.dao.UserActionDao;
 import com.neu.jianshufront.entity.UserAction;
 import com.neu.jianshufront.service.UserActionService;
@@ -16,6 +17,9 @@ public class UserActionServiceImpl implements UserActionService {
     @Autowired
     private UserActionDao userActionDao;
 
+    @Autowired
+    private MyUserDao myUserDao;
+
     @Override
     public int addUserAction(UserAction userAction) {
         if(StringUtils.isEmpty(userAction.getUid().trim())|| StringUtils.isEmpty(userAction.getAction().trim())
@@ -24,14 +28,16 @@ public class UserActionServiceImpl implements UserActionService {
         }
         if(userAction.getAction().equals("collect")){
             UserAction userAction1=userActionDao.check(userAction);
-            if(userAction==null){
+            if(userAction1==null){
+                myUserDao.addCollect(Integer.parseInt(userAction.getUid()));
                 return userActionDao.add(userAction);
             }else{
+                myUserDao.deleteCollect(Integer.parseInt(userAction.getUid()));
                 return userActionDao.delete(userAction1.getId());
             }
         }else{
             UserAction userAction1=userActionDao.check(userAction);
-            if(userAction==null){
+            if(userAction1==null){
                 return userActionDao.add(userAction);
             }else {
                 return 0;

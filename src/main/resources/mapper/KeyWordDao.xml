@@ -7,6 +7,12 @@
         select * from jianshu.article where find_in_set(#{keyWord},key_words);
     </select>
 
+    <select id="getArticleInCollect" resultType="com.neu.jianshufront.entity.KeyWord">
+        select * from jianshu.article where
+        pid in (select pid from jianshu.user_action where user_action.uid=#{id} and
+                                                          user_action.action='collect')
+    </select>
+
     <insert id="add" parameterType="com.neu.jianshufront.entity.KeyWord" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
         insert into jianshu.article
         (uid, pid, author, last_update_time, font_num, read_num, like_num, comment_num, title,

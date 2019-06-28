@@ -31,4 +31,9 @@ public class SearchServiceImpl implements SearchService {
         }
         return keyWords;
     }
+
+    @Override
+    public List<KeyWord> getCollectByUserId(int userId) {
+        return keyWordDao.getArticleInCollect(userId);
+    }
 }

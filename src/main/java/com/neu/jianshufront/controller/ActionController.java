@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class ActionController {
     @Autowired
     private UserActionService userActionService;
 
-    @PostMapping("/collect")
+    @RequestMapping("/collect")
     @ResponseBody
     @Transactional
     public Message collect(@RequestParam("uid")String uid,
@@ -40,7 +42,7 @@ public class ActionController {
         return message;
     }
 
-    @PostMapping("/browse")
+    @RequestMapping("/browse")
     @ResponseBody
     @Transactional
     public Message browse(@RequestParam("uid")String uid,
@@ -50,7 +52,10 @@ public class ActionController {
         userAction.setUid(uid.trim());
         userAction.setPid(pid.trim());
         userAction.setAction("browse");
-        userAction.setTime(String.valueOf(new Date()));
+        Date currentTime = new Date();// 获取当前时间
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");// 格式化时间
+        String dateString = formatter.format(currentTime);
+        userAction.setTime(dateString);
         int flag=userActionService.addUserAction(userAction);
         if(flag<0){
             message.ok(HttpStatus.BAD_REQUEST,"文章浏览计数失败");
@@ -60,7 +65,7 @@ public class ActionController {
         return message;
     }
 
-    @GetMapping("/getbyuser")
+    @RequestMapping("/getbyuser")
     @ResponseBody
     @Transactional
     public Message getByUser(@RequestParam("uid")String uid){
@@ -74,7 +79,7 @@ public class ActionController {
         return message;
     }
 
-    @GetMapping("delete")
+    @RequestMapping("delete")
     @ResponseBody
     @Transactional
     public Message delete(@RequestParam("id")int id){

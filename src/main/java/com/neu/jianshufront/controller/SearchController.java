@@ -22,12 +22,28 @@ public class SearchController {
     private SearchService searchService;
 
     @RequestMapping("search")
-    @Transactional
     @ResponseBody
     public Message search(@RequestParam("line") String line){
         Message message=new Message();
         List<KeyWord> wordList = searchService.getLink(line);
         message.ok(HttpStatus.ACCEPTED,"请求成功").addData("data",wordList);
         return message;
+    }
+
+    @RequestMapping("getcollect")
+    @ResponseBody
+    public Message getCollect(@RequestParam("uid")int uid){
+        Message message=new Message();
+        List<KeyWord> article=searchService.getCollectByUserId(uid);
+        if(article.size()==0){
+            message.ok(HttpStatus.BAD_REQUEST,"用户没有收藏任何文章");
+        }else{
+            for(KeyWord art:article){
+                art.setOtherText("collect");
+            }
+            message.ok(HttpStatus.OK,"成功获得收藏文章").addData("article",article);
+        }
+        return message;
+
     }
 }

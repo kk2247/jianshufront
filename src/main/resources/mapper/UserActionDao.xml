@@ -12,7 +12,7 @@
     <select id="check" resultType="com.neu.jianshufront.entity.UserAction">
         select * from
             jianshu.user_action
-        where uid=#{uid} and pid=#{pid} and action='collect'
+        where uid=#{uid} and pid=#{pid} and action=#{action}
     </select>
 
     <insert id="add" parameterType="com.neu.jianshufront.entity.UserAction" keyProperty="id" keyColumn="id" useGeneratedKeys="true">

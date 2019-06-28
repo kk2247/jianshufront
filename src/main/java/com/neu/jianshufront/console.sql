@@ -1,7 +1,7 @@
-create table user_action(
+create table my_user(
     id int primary key auto_increment,
-    uid varchar(50),
-    action varchar(30),
-    time varchar(50),
-    pid varchar(50)
+    account varchar(50),
+    password varchar(30),
+    email varchar(50) unique ,
+    collect_num int
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

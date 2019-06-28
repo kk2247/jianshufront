@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.jianshufront.dao.MyUserDao">
+    <select id="getUserByEmailAndPassword" resultType="com.neu.jianshufront.entity.MyUser">
+        select * from jianshu.my_user where email=#{email} and password=#{password}
+    </select>
+
+    <insert id="add" parameterType="com.neu.jianshufront.entity.MyUser" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        insert into jianshu.my_user
+        (account, password, email, collect_num) VALUES
+        (#{account},#{password},#{email},0)
+    </insert>
+
+    <update id="addCollect">
+        UPDATE jianshu.my_user
+        set collect_num=collect_num+1
+        WHERE id=#{id}
+    </update>
+
+    <update id="deleteCollect">
+        UPDATE jianshu.my_user
+        set collect_num=collect_num-1
+        WHERE id=#{id}
+    </update>
+
+
+</mapper>
