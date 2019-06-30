@@ -32,9 +32,9 @@ public class SearchController {
 
     @RequestMapping("getcollect")
     @ResponseBody
-    public Message getCollect(@RequestParam("uid")int uid){
+    public Message getCollect(@RequestParam("uid")int uid,@RequestParam("category") String category){
         Message message=new Message();
-        List<KeyWord> article=searchService.getCollectByUserId(uid);
+        List<KeyWord> article=searchService.getCollectByUserId(uid,category);
         if(article.size()==0){
             message.ok(HttpStatus.BAD_REQUEST,"用户没有收藏任何文章");
         }else{

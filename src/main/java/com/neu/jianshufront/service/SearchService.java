@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface SearchService {
     List<KeyWord> getLink(String line);
-    List<KeyWord> getCollectByUserId(int userId);
+    List<KeyWord> getCollectByUserId(int userId,String category);
 }
